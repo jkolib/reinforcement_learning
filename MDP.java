@@ -122,15 +122,19 @@ public class MDP{
         Random r = new Random();
         int id = r.nextInt(nt_states);
 
-        HashSet<int[]> set = new HashSet<int[]>();
+        HashSet<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
+        
         int reward = 0;
+
         while(true){
             Nt_state state = nt_states_node.get(id);
 
             int action_num = chooseAction(id);
 
-            int[] set_arr = {state.id, action_num};
-            set.add(set_arr);
+            ArrayList<Integer> s_a = new ArrayList<Integer>();
+            s_a.add(state.id);
+            s_a.add(action_num);
+            set.add(s_a);
 
             Action action = state.actions.get(action_num);
             id = nextState(action.probs);
@@ -141,9 +145,9 @@ public class MDP{
             }
         }
 
-        for(int[] s_a : set){
-            int state = s_a[0];
-            int action = s_a[1];
+        for(ArrayList<Integer> s__a : set){
+            int state = s__a.get(0);
+            int action = s__a.get(1);
 
             count[state][action]++;
             total[state][action] += reward;
